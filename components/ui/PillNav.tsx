@@ -90,7 +90,7 @@ const PillNav: React.FC<PillNavProps> = ({
 
         {items.map((item, index) => (
           <Link
-            key={item.href}
+            key={`nav-${index}`}
             href={item.href}
             onClick={() => setActiveIndex(index)}
             className="relative z-10 py-2 px-6 text-[15px] font-medium rounded-[50px] transition-colors duration-300"
@@ -135,7 +135,7 @@ const PillNav: React.FC<PillNavProps> = ({
         <div className="pt-20 px-4">
           <ul className="list-none m-0 p-[3px] flex flex-col gap-[3px]">
             {items.map((item, index) => (
-              <li key={item.href}>
+              <li key={`mobile-nav-${index}`}>
                 <Link
                   href={item.href}
                   onClick={() => {
@@ -154,25 +154,6 @@ const PillNav: React.FC<PillNavProps> = ({
               </li>
             ))}
 
-            {/* Auth Buttons in Mobile Menu */}
-            <li className="border-t border-gray-200 dark:border-gray-700 mt-4 pt-4">
-              <Link
-                href="/sign-in"
-                className="block py-3 px-4 text-[16px] font-medium rounded-lg text-center bg-transparent text-orange-600 dark:text-orange-400 border-2 border-orange-500 hover:bg-orange-50 dark:hover:bg-orange-900/20"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Sign In
-              </Link>
-            </li>
-            <li>
-              <Link
-                href="/sign-up"
-                className="block py-3 px-4 text-[16px] font-medium rounded-lg text-center bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Sign Up
-              </Link>
-            </li>
           </ul>
         </div>
       </div>

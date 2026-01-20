@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ShoppingCart, Sun, Moon, Shield, Shirt, Home, Car } from "lucide-react";
+import { Sun, Moon, Shield, Shirt, Home, Car } from "lucide-react";
 import { useTheme } from "next-themes";
-import ShootingStarsThemed from "@/components/ShootingStarsThemed";
-import PillNav from "@/components/PillNav";
+import { GalaxyThemed } from "@/components/ui/GalaxyThemed";
+import PillNav from "@/components/ui/PillNav";
 
 export default function LandingPage() {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -28,8 +28,10 @@ export default function LandingPage() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-orange-50 via-amber-50 to-red-50 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950 transition-colors duration-300">
-      {/* Animated Background Stars */}
-      <ShootingStarsThemed />
+      {/* Galaxy Background */}
+      <div className="fixed inset-0 z-0">
+        <GalaxyThemed />
+      </div>
 
       {/* Navigation */}
       <div className="fixed top-0 left-0 right-0 z-[1000] bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md">
@@ -64,8 +66,8 @@ export default function LandingPage() {
           />
         </div>
 
-        {/* Right Section: Theme Toggle + Cart + Auth */}
-        <div className="absolute top-[1em] right-4 md:right-8 flex items-center gap-3 z-[1002]">
+        {/* Right Section: Theme Toggle */}
+        <div className="absolute top-[1em] right-4 md:right-8 z-[1002]">
           {/* Theme Toggle */}
           <button
             onClick={toggleTheme}
@@ -79,32 +81,6 @@ export default function LandingPage() {
               <Sun className="w-5 h-5 text-white" strokeWidth={2} />
             )}
           </button>
-
-          {/* Shopping Cart */}
-          <Link
-            href="/cart"
-            className="w-[44px] h-[44px] rounded-full bg-white dark:bg-gray-800 flex items-center justify-center hover:scale-110 transition-transform shadow-lg border-2 border-orange-300 dark:border-orange-500"
-            aria-label="Shopping Cart"
-          >
-            <ShoppingCart className="w-5 h-5 text-orange-600 dark:text-orange-400" strokeWidth={2} />
-          </Link>
-
-          {/* Desktop Auth Buttons */}
-          <div className="hidden md:flex items-center gap-3">
-            <Link
-              href="/sign-in"
-              className="px-6 py-2 h-[44px] flex items-center justify-center rounded-full border-2 border-orange-500 text-orange-600 dark:text-orange-400 dark:border-orange-400 font-semibold text-sm hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-all duration-300"
-            >
-              Sign In
-            </Link>
-
-            <Link
-              href="/sign-up"
-              className="px-6 py-2 h-[44px] flex items-center justify-center rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold text-sm hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-lg"
-            >
-              Sign Up
-            </Link>
-          </div>
         </div>
       </div>
 
@@ -300,10 +276,10 @@ export default function LandingPage() {
             Join thousands of NRIs who trust Nridesikart for their Indian service needs
           </p>
           <Link
-            href="/sign-up"
+            href="/services"
             className="px-12 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold text-lg rounded-full hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-2xl hover:scale-105 inline-block"
           >
-            Create Your Free Account →
+            Explore Our Services →
           </Link>
         </section>
       </div>

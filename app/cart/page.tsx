@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ShoppingCart, Sun, Moon, Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
 import { useTheme } from "next-themes";
-import PillNav from "@/components/PillNav";
+import PillNav from "@/components/ui/PillNav";
 import ShootingStarsThemed from "@/components/ShootingStarsThemed";
 
 export default function CartPage() {
