@@ -6,8 +6,7 @@ import Image from "next/image";
 import { ShoppingCart, Sun, Moon, Trash2, Plus, Minus, ShoppingBag } from "lucide-react";
 import { useTheme } from "next-themes";
 import PillNav from "@/components/ui/PillNav";
-import ShootingStarsThemed from "@/components/ShootingStarsThemed";
-import AuthAvatarMenu from "@/components/AuthAvatarMenu";
+import { GalaxyThemed } from "@/components/ui/GalaxyThemed";
 
 export default function CartPage() {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -32,8 +31,10 @@ export default function CartPage() {
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-gradient-to-br from-orange-50 via-amber-50 to-red-50 dark:from-gray-900 dark:via-slate-900 dark:to-indigo-950 transition-colors duration-300">
-      {/* Animated Background Stars */}
-      <ShootingStarsThemed />
+      {/* Galaxy Background */}
+      <div className="fixed inset-0 z-0">
+        <GalaxyThemed />
+      </div>
 
       {/* Navigation */}
       <div className="fixed top-0 left-0 right-0 z-[1000] bg-white/80 dark:bg-gray-900/80 backdrop-blur-md shadow-md">
@@ -78,16 +79,6 @@ export default function CartPage() {
               <Sun className="w-5 h-5 text-white" strokeWidth={2} />
             )}
           </button>
-
-          <Link
-            href="/cart"
-            className="w-[44px] h-[44px] rounded-full bg-gradient-to-r from-orange-500 to-red-500 flex items-center justify-center hover:scale-110 transition-transform shadow-lg"
-            aria-label="Shopping Cart"
-          >
-            <ShoppingCart className="w-5 h-5 text-white" strokeWidth={2} />
-          </Link>
-
-          <AuthAvatarMenu />
         </div>
       </div>
 

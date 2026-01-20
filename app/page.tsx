@@ -7,7 +7,6 @@ import { Sun, Moon, Shield, Shirt, Home, Car } from "lucide-react";
 import { useTheme } from "next-themes";
 import { GalaxyThemed } from "@/components/ui/GalaxyThemed";
 import PillNav from "@/components/ui/PillNav";
-import AuthAvatarMenu from "@/components/AuthAvatarMenu";
 
 export default function LandingPage() {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -82,9 +81,6 @@ export default function LandingPage() {
               <Sun className="w-5 h-5 text-white" strokeWidth={2} />
             )}
           </button>
-
-          {/* Auth Avatar Menu */}
-          <AuthAvatarMenu />
         </div>
       </div>
 
@@ -115,7 +111,7 @@ export default function LandingPage() {
           </p>
 
           <Link
-            href="/services"
+            href="/home"
             className="px-10 py-4 text-lg font-bold rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-2xl hover:scale-105"
           >
             Explore Our Services →
@@ -280,7 +276,7 @@ export default function LandingPage() {
             Join thousands of NRIs who trust Nridesikart for their Indian service needs
           </p>
           <Link
-            href="/services"
+            href="/home"
             className="px-12 py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold text-lg rounded-full hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-2xl hover:scale-105 inline-block"
           >
             Explore Our Services →

@@ -46,11 +46,11 @@ export function GalaxyThemed() {
       <Galaxy
         mouseRepulsion={!isMobile}
         mouseInteraction={!isMobile}
-        density={0.9 * densityMultiplier}
-        glowIntensity={0.2}
-        saturation={0.15}
-        hueShift={20}
-        twinkleIntensity={0.3}
+        density={1.2 * densityMultiplier}
+        glowIntensity={0.5}
+        saturation={0.8}
+        hueShift={25}
+        twinkleIntensity={0.5}
         rotationSpeed={0.1}
         repulsionStrength={2}
         autoCenterRepulsion={0}
