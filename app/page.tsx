@@ -7,6 +7,7 @@ import { Sun, Moon, Shield, Shirt, Home, Car } from "lucide-react";
 import { useTheme } from "next-themes";
 import { GalaxyThemed } from "@/components/ui/GalaxyThemed";
 import PillNav from "@/components/ui/PillNav";
+import AuthAvatarMenu from "@/components/AuthAvatarMenu";
 
 export default function LandingPage() {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -81,6 +82,9 @@ export default function LandingPage() {
               <Sun className="w-5 h-5 text-white" strokeWidth={2} />
             )}
           </button>
+
+          {/* Auth Avatar Menu */}
+          <AuthAvatarMenu />
         </div>
       </div>
 
