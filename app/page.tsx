@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Sun, Moon, Shield, Shirt, Home, Car } from "lucide-react";
+import { Sun, Moon, Shield, Shirt, Home, Car, Users, Target, Heart, Globe, Mail, Phone, MapPin, Clock, Send, ArrowRight } from "lucide-react";
 import { useTheme } from "next-themes";
 import { GalaxyThemed } from "@/components/ui/GalaxyThemed";
 import PillNav from "@/components/ui/PillNav";
@@ -11,6 +11,80 @@ import PillNav from "@/components/ui/PillNav";
 export default function LandingPage() {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: ""
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log("Form submitted:", formData);
+    alert("Thank you for your message! We will get back to you soon.");
+    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const navHeight = 80;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: elementPosition - navHeight,
+        behavior: 'smooth'
+      });
+    }
+  };
+
+  const services = [
+    {
+      id: "insurance",
+      title: "Life Insurance",
+      description: "Secure your family's future with comprehensive Indian insurance policies. We partner with top insurance providers in India to offer you the best coverage options.",
+      icon: Shield,
+      features: ["Term Life Insurance", "Whole Life Policies", "Investment-linked Plans", "Health Insurance Add-ons"],
+      bgGradient: "from-blue-50 to-indigo-100 dark:from-blue-900/20 dark:to-indigo-900/20",
+      borderColor: "border-blue-200 dark:border-blue-600",
+      iconBg: "bg-blue-500 dark:bg-blue-600"
+    },
+    {
+      id: "tailoring",
+      title: "Fabrics & Tailoring",
+      description: "Premium Indian fabrics and expert custom tailoring services. Get authentic Indian clothing made to your exact measurements and delivered to your doorstep.",
+      icon: Shirt,
+      features: ["Silk Sarees", "Custom Suits & Sherwanis", "Bridal Wear", "Traditional Outfits"],
+      bgGradient: "from-pink-50 to-rose-100 dark:from-pink-900/20 dark:to-rose-900/20",
+      borderColor: "border-pink-200 dark:border-pink-600",
+      iconBg: "bg-pink-500 dark:bg-pink-600"
+    },
+    {
+      id: "realestate",
+      title: "Real Estate",
+      description: "Smart property investments across India with expert guidance. Whether you're looking to buy, sell, or invest in Indian real estate, we've got you covered.",
+      icon: Home,
+      features: ["Property Search", "Investment Advisory", "Legal Documentation", "Property Management"],
+      bgGradient: "from-green-50 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20",
+      borderColor: "border-green-200 dark:border-green-600",
+      iconBg: "bg-green-500 dark:bg-green-600"
+    },
+    {
+      id: "auto",
+      title: "Auto Advertisements",
+      description: "Buy, sell, or advertise vehicles in India hassle-free. Our platform connects you with verified buyers and sellers across major Indian cities.",
+      icon: Car,
+      features: ["Vehicle Listings", "Buyer-Seller Matching", "Price Negotiation", "Documentation Help"],
+      bgGradient: "from-amber-50 to-orange-100 dark:from-amber-900/20 dark:to-orange-900/20",
+      borderColor: "border-amber-200 dark:border-amber-600",
+      iconBg: "bg-amber-500 dark:bg-amber-600"
+    }
+  ];
 
   useEffect(() => {
     setMounted(true);
@@ -53,10 +127,10 @@ export default function LandingPage() {
         <div className="flex items-center justify-center py-4">
           <PillNav
             items={[
-              { label: "Home", href: "/" },
-              { label: "About", href: "/about" },
-              { label: "Services", href: "/services" },
-              { label: "Contact", href: "/contact" }
+              { label: "Home", href: "#hero" },
+              { label: "About", href: "#about" },
+              { label: "Services", href: "#services" },
+              { label: "Contact", href: "#contact" }
             ]}
             ease="power2.easeOut"
             baseColor={currentTheme === "dark" ? "#1F2937" : "#FFFFFF"}
@@ -87,7 +161,7 @@ export default function LandingPage() {
       {/* Main Content */}
       <div className="relative z-10">
         {/* Hero Section */}
-        <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20">
+        <section id="hero" className="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20">
           <div className="inline-block px-6 py-2 rounded-full bg-orange-100 dark:bg-orange-900/30 border-2 border-orange-300 dark:border-orange-600 mb-6">
             <span className="text-orange-700 dark:text-orange-300 font-semibold text-sm">
               🇮🇳 Connecting NRIs with India Since 2024
@@ -119,7 +193,7 @@ export default function LandingPage() {
         </section>
 
         {/* How We Work Section */}
-        <section className="py-20 px-4 md:px-8 lg:px-16 bg-white/50 dark:bg-gray-800/30">
+        <section id="how-it-works" className="py-20 px-4 md:px-8 lg:px-16 bg-white/50 dark:bg-gray-800/30">
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-4">
             How We Work
           </h2>
@@ -169,79 +243,146 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* Services Overview Section */}
-        <section className="py-20 px-4 md:px-8 lg:px-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-4">
-            Our Services
-          </h2>
-          <p className="text-center text-gray-600 dark:text-gray-400 mb-16 text-lg">
-            Comprehensive solutions for all your India-related needs
-          </p>
+        {/* About Section */}
+        <section id="about" className="py-20 px-4 md:px-8 lg:px-16">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+              About Nridesikart
+            </h2>
+            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
+              Your trusted bridge to India, offering authentic Indian services
+              to Non-Resident Indians living in the USA.
+            </p>
+          </div>
 
-          <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {/* Life Insurance */}
-            <Link
-              href="/services/insurance"
-              className="group bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-blue-900/20 dark:to-indigo-900/20 backdrop-blur-md rounded-3xl p-8 border-2 border-blue-200 dark:border-blue-600 hover:scale-105 hover:shadow-2xl transition-all duration-300"
-            >
-              <div className="w-16 h-16 rounded-full bg-blue-500 dark:bg-blue-600 flex items-center justify-center mb-4">
-                <Shield className="w-8 h-8 text-white" strokeWidth={2} />
+          {/* Our Story */}
+          <div className="max-w-6xl mx-auto mb-16">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center mb-12">
+              Our Story
+            </h3>
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                  Founded in 2024, Nridesikart was born from a simple observation: NRIs often struggle 
+                  to access reliable services back home in India. Whether it&apos;s securing life insurance, 
+                  getting custom tailoring done, investing in real estate, or buying/selling vehicles — 
+                  the distance makes everything complicated.
+                </p>
+                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                  We bridge that gap. Our team of dedicated professionals in both the USA and India 
+                  ensures seamless service delivery, bringing the comfort and reliability of Indian 
+                  services right to your doorstep in America.
+                </p>
               </div>
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                Life Insurance
-              </h3>
-              <p className="text-gray-700 dark:text-gray-300 text-base">
-                Secure your family&apos;s future with comprehensive Indian insurance policies
-              </p>
-            </Link>
+              <div className="bg-gradient-to-br from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600">
+                <div className="text-6xl font-bold text-orange-600 dark:text-orange-400 mb-4">2024</div>
+                <p className="text-xl text-gray-700 dark:text-gray-300">Year Founded</p>
+                <div className="mt-6 pt-6 border-t border-orange-200 dark:border-orange-600">
+                  <div className="text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2">5000+</div>
+                  <p className="text-lg text-gray-700 dark:text-gray-300">Happy Customers Served</p>
+                </div>
+              </div>
+            </div>
+          </div>
 
-            {/* Fabrics & Tailoring */}
-            <Link
-              href="/services/tailoring"
-              className="group bg-gradient-to-br from-pink-50 to-rose-100 dark:from-pink-900/20 dark:to-rose-900/20 backdrop-blur-md rounded-3xl p-8 border-2 border-pink-200 dark:border-pink-600 hover:scale-105 hover:shadow-2xl transition-all duration-300"
-            >
-              <div className="w-16 h-16 rounded-full bg-pink-500 dark:bg-pink-600 flex items-center justify-center mb-4">
-                <Shirt className="w-8 h-8 text-white" strokeWidth={2} />
+          {/* Our Values */}
+          <div className="max-w-6xl mx-auto">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center mb-12">
+              Our Values
+            </h3>
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 text-center hover:shadow-2xl transition-all duration-300">
+                <div className="w-16 h-16 rounded-full bg-orange-500 flex items-center justify-center mx-auto mb-4">
+                  <Heart className="w-8 h-8 text-white" strokeWidth={2} />
+                </div>
+                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Trust</h4>
+                <p className="text-gray-700 dark:text-gray-300">Building lasting relationships through honesty and transparency</p>
               </div>
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-pink-600 dark:group-hover:text-pink-400 transition-colors">
-                Fabrics & Tailoring
-              </h3>
-              <p className="text-gray-700 dark:text-gray-300 text-base">
-                Premium Indian fabrics and expert custom tailoring services
-              </p>
-            </Link>
 
-            {/* Real Estate */}
-            <Link
-              href="/services/realestate"
-              className="group bg-gradient-to-br from-green-50 to-emerald-100 dark:from-green-900/20 dark:to-emerald-900/20 backdrop-blur-md rounded-3xl p-8 border-2 border-green-200 dark:border-green-600 hover:scale-105 hover:shadow-2xl transition-all duration-300"
-            >
-              <div className="w-16 h-16 rounded-full bg-green-500 dark:bg-green-600 flex items-center justify-center mb-4">
-                <Home className="w-8 h-8 text-white" strokeWidth={2} />
+              <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 text-center hover:shadow-2xl transition-all duration-300">
+                <div className="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center mx-auto mb-4">
+                  <Target className="w-8 h-8 text-white" strokeWidth={2} />
+                </div>
+                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Quality</h4>
+                <p className="text-gray-700 dark:text-gray-300">Delivering excellence in every service we provide</p>
               </div>
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
-                Real Estate
-              </h3>
-              <p className="text-gray-700 dark:text-gray-300 text-base">
-                Smart property investments across India with expert guidance
-              </p>
-            </Link>
 
-            {/* Auto Advertisements */}
-            <Link
-              href="/services/auto"
-              className="group bg-gradient-to-br from-amber-50 to-orange-100 dark:from-amber-900/20 dark:to-orange-900/20 backdrop-blur-md rounded-3xl p-8 border-2 border-amber-200 dark:border-amber-600 hover:scale-105 hover:shadow-2xl transition-all duration-300"
-            >
-              <div className="w-16 h-16 rounded-full bg-amber-500 dark:bg-amber-600 flex items-center justify-center mb-4">
-                <Car className="w-8 h-8 text-white" strokeWidth={2} />
+              <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 text-center hover:shadow-2xl transition-all duration-300">
+                <div className="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-white" strokeWidth={2} />
+                </div>
+                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Community</h4>
+                <p className="text-gray-700 dark:text-gray-300">Strengthening the NRI community connection with India</p>
               </div>
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
-                Auto Ads
-              </h3>
-              <p className="text-gray-700 dark:text-gray-300 text-base">
-                Buy, sell, or advertise vehicles in India hassle-free
-              </p>
-            </Link>
+
+              <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 text-center hover:shadow-2xl transition-all duration-300">
+                <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center mx-auto mb-4">
+                  <Globe className="w-8 h-8 text-white" strokeWidth={2} />
+                </div>
+                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Reach</h4>
+                <p className="text-gray-700 dark:text-gray-300">Serving 50+ cities across India with local expertise</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Services Section - Expanded */}
+        <section id="services" className="py-20 px-4 md:px-8 lg:px-16 bg-white/50 dark:bg-gray-800/30">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+              Our Services
+            </h2>
+            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
+              Comprehensive solutions for all your India-related needs. 
+              Quality service, transparent pricing, and reliable delivery.
+            </p>
+          </div>
+
+          <div className="max-w-7xl mx-auto space-y-12">
+            {services.map((service, index) => {
+              const IconComponent = service.icon;
+              return (
+                <div
+                  key={service.id}
+                  className={`bg-gradient-to-br ${service.bgGradient} backdrop-blur-md rounded-3xl p-8 md:p-12 border-2 ${service.borderColor} hover:shadow-2xl transition-all duration-300`}
+                >
+                  <div className={`grid md:grid-cols-2 gap-8 items-center ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+                    <div className={index % 2 === 1 ? 'md:order-2' : ''}>
+                      <div className={`w-20 h-20 rounded-full ${service.iconBg} flex items-center justify-center mb-6`}>
+                        <IconComponent className="w-10 h-10 text-white" strokeWidth={2} />
+                      </div>
+                      <h3 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+                        {service.title}
+                      </h3>
+                      <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                        {service.description}
+                      </p>
+                      <Link
+                        href={`/services/${service.id}`}
+                        className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-full hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-lg hover:scale-105"
+                      >
+                        Learn More <ArrowRight className="w-5 h-5" />
+                      </Link>
+                    </div>
+                    <div className={index % 2 === 1 ? 'md:order-1' : ''}>
+                      <div className="bg-white/80 dark:bg-gray-800/80 rounded-2xl p-6">
+                        <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                          What We Offer
+                        </h4>
+                        <ul className="space-y-3">
+                          {service.features.map((feature, idx) => (
+                            <li key={idx} className="flex items-center gap-3 text-gray-700 dark:text-gray-300">
+                              <div className={`w-2 h-2 rounded-full ${service.iconBg}`}></div>
+                              <span className="text-base">{feature}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </section>
 
@@ -267,8 +408,177 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* Contact Section */}
+        <section id="contact" className="py-20 px-4 md:px-8 lg:px-16">
+          <div className="max-w-4xl mx-auto text-center mb-16">
+            <h2 className="text-3xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+              Contact Us
+            </h2>
+            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
+              Have questions? We&apos;re here to help. Reach out to us and we&apos;ll respond as soon as possible.
+            </p>
+          </div>
+
+          <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
+            {/* Contact Info */}
+            <div>
+              <h3 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">
+                Get in Touch
+              </h3>
+              
+              <div className="space-y-6">
+                <div className="flex items-start gap-4 bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-2xl p-6 border-2 border-orange-200 dark:border-orange-600">
+                  <div className="w-12 h-12 rounded-full bg-orange-500 flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-6 h-6 text-white" strokeWidth={2} />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Email Us</h4>
+                    <p className="text-gray-700 dark:text-gray-300">support@nridesikart.com</p>
+                    <p className="text-gray-700 dark:text-gray-300">info@nridesikart.com</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-2xl p-6 border-2 border-orange-200 dark:border-orange-600">
+                  <div className="w-12 h-12 rounded-full bg-red-500 flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-6 h-6 text-white" strokeWidth={2} />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Call Us</h4>
+                    <p className="text-gray-700 dark:text-gray-300">USA: +1 (555) 123-4567</p>
+                    <p className="text-gray-700 dark:text-gray-300">India: +91 98765 43210</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-2xl p-6 border-2 border-orange-200 dark:border-orange-600">
+                  <div className="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-6 h-6 text-white" strokeWidth={2} />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Our Offices</h4>
+                    <p className="text-gray-700 dark:text-gray-300">USA: 123 Business Ave, New York, NY 10001</p>
+                    <p className="text-gray-700 dark:text-gray-300">India: 456 Commerce St, Mumbai 400001</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-2xl p-6 border-2 border-orange-200 dark:border-orange-600">
+                  <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                    <Clock className="w-6 h-6 text-white" strokeWidth={2} />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Business Hours</h4>
+                    <p className="text-gray-700 dark:text-gray-300">Monday - Friday: 9 AM - 6 PM (EST)</p>
+                    <p className="text-gray-700 dark:text-gray-300">24/7 Online Support Available</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Contact Form */}
+            <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600">
+              <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">
+                Send Us a Message
+              </h3>
+              
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <label htmlFor="name" className="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 text-base rounded-xl border-2 border-orange-200 dark:border-orange-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:border-orange-500 transition-colors"
+                    placeholder="Enter your full name"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="email" className="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 text-base rounded-xl border-2 border-orange-200 dark:border-orange-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:border-orange-500 transition-colors"
+                    placeholder="Enter your email"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="phone" className="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Phone Number
+                  </label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 text-base rounded-xl border-2 border-orange-200 dark:border-orange-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:border-orange-500 transition-colors"
+                    placeholder="Enter your phone number"
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="subject" className="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Subject *
+                  </label>
+                  <select
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    required
+                    className="w-full px-4 py-3 text-base rounded-xl border-2 border-orange-200 dark:border-orange-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:border-orange-500 transition-colors"
+                  >
+                    <option value="">Select a subject</option>
+                    <option value="insurance">Life Insurance</option>
+                    <option value="tailoring">Fabrics & Tailoring</option>
+                    <option value="realestate">Real Estate</option>
+                    <option value="auto">Auto Advertisements</option>
+                    <option value="general">General Inquiry</option>
+                    <option value="support">Support</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-base font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Message *
+                  </label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
+                    rows={5}
+                    className="w-full px-4 py-3 text-base rounded-xl border-2 border-orange-200 dark:border-orange-600 bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:outline-none focus:border-orange-500 transition-colors resize-none"
+                    placeholder="How can we help you?"
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  className="w-full py-4 bg-gradient-to-r from-orange-500 to-red-500 text-white font-bold text-lg rounded-xl hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-lg hover:scale-[1.02] flex items-center justify-center gap-2"
+                >
+                  <Send className="w-5 h-5" />
+                  Send Message
+                </button>
+              </form>
+            </div>
+          </div>
+        </section>
+
         {/* Final CTA Section */}
-        <section className="py-20 px-4 text-center">
+        <section className="py-20 px-4 text-center bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/20 dark:to-red-900/20">
           <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
             Ready to Get Started?
           </h2>
@@ -297,9 +607,9 @@ export default function LandingPage() {
             <Link href="/terms" className="hover:text-orange-400 transition-colors">
               Terms of Service
             </Link>
-            <Link href="/contact" className="hover:text-orange-400 transition-colors">
+            <a href="#contact" className="hover:text-orange-400 transition-colors">
               Contact Us
-            </Link>
+            </a>
           </div>
         </div>
       </footer>

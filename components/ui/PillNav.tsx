@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -34,6 +35,45 @@ const PillNav: React.FC<PillNavProps> = ({
   const pillRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const router = useRouter();
+
+  const scrollToSection = useCallback((sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const navHeight = 80;
+      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: elementPosition - navHeight,
+        behavior: 'smooth'
+      });
+    }
+  }, []);
+
+  const handleNavClick = useCallback((e: React.MouseEvent<HTMLAnchorElement>, href: string, index: number) => {
+    setActiveIndex(index);
+    
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      const sectionId = href.substring(1);
+      scrollToSection(sectionId);
+      
+      // Update URL without page reload
+      window.history.pushState(null, '', href);
+    }
+  }, [scrollToSection]);
+
+  // Handle initial hash on page load
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (hash) {
+      const index = items.findIndex(item => item.href === hash);
+      if (index !== -1) {
+        setActiveIndex(index);
+        // Small delay to ensure DOM is ready
+        setTimeout(() => scrollToSection(hash.substring(1)), 100);
+      }
+    }
+  }, [items, scrollToSection]);
 
   useEffect(() => {
     if (!navRef.current || !pillRef.current) return;
@@ -89,17 +129,17 @@ const PillNav: React.FC<PillNavProps> = ({
         />
 
         {items.map((item, index) => (
-          <Link
+          <a
             key={`nav-${index}`}
             href={item.href}
-            onClick={() => setActiveIndex(index)}
-            className="relative z-10 py-2 px-6 text-[15px] font-medium rounded-[50px] transition-colors duration-300"
+            onClick={(e) => handleNavClick(e, item.href, index)}
+            className="relative z-10 py-2 px-6 text-[15px] font-medium rounded-[50px] transition-colors duration-300 cursor-pointer"
             style={{
               color: activeIndex === index ? hoveredPillTextColor : pillTextColor
             }}
           >
             {item.label}
-          </Link>
+          </a>
         ))}
       </div>
 
@@ -136,21 +176,21 @@ const PillNav: React.FC<PillNavProps> = ({
           <ul className="list-none m-0 p-[3px] flex flex-col gap-[3px]">
             {items.map((item, index) => (
               <li key={`mobile-nav-${index}`}>
-                <Link
+                <a
                   href={item.href}
-                  onClick={() => {
-                    setActiveIndex(index);
+                  onClick={(e) => {
+                    handleNavClick(e, item.href, index);
                     setIsMobileMenuOpen(false);
                   }}
                   className={cn(
-                    "block py-3 px-4 text-[16px] font-medium rounded-lg transition-all",
+                    "block py-3 px-4 text-[16px] font-medium rounded-lg transition-all cursor-pointer",
                     activeIndex === index
                       ? "bg-gradient-to-r from-orange-500 to-red-500 text-white"
                       : "text-gray-900 dark:text-white hover:bg-orange-50 dark:hover:bg-gray-800"
                   )}
                 >
                   {item.label}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
