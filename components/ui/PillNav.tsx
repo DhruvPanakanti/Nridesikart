@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/contexts/CartContext";
 
 interface NavItem {
   label: string;
@@ -36,6 +37,7 @@ const PillNav: React.FC<PillNavProps> = ({
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const router = useRouter();
+  const { count: cartCount } = useCart();
 
   const scrollToSection = useCallback((sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -139,6 +141,11 @@ const PillNav: React.FC<PillNavProps> = ({
             }}
           >
             {item.label}
+            {item.label.toLowerCase() === 'cart' && cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-orange-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                {cartCount}
+              </span>
+            )}
           </a>
         ))}
       </div>
@@ -183,13 +190,18 @@ const PillNav: React.FC<PillNavProps> = ({
                     setIsMobileMenuOpen(false);
                   }}
                   className={cn(
-                    "block py-3 px-4 text-[16px] font-medium rounded-lg transition-all cursor-pointer",
+                    "block py-3 px-4 text-[16px] font-medium rounded-lg transition-all cursor-pointer relative",
                     activeIndex === index
                       ? "bg-gradient-to-r from-orange-500 to-red-500 text-white"
-                      : "text-gray-900 dark:text-white hover:bg-orange-50 dark:hover:bg-gray-800"
+                      : "text-black dark:text-white hover:bg-orange-50 dark:hover:bg-gray-800"
                   )}
                 >
                   {item.label}
+                  {item.label.toLowerCase() === 'cart' && cartCount > 0 && (
+                    <span className="absolute top-1 right-2 bg-orange-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                      {cartCount}
+                    </span>
+                  )}
                 </a>
               </li>
             ))}

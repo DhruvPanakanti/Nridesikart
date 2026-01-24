@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Sun, Moon, Search, ShoppingCart, CheckCircle, Users, MessageCircle, UserCheck } from "lucide-react";
+import { Search, ShoppingCart, CheckCircle, Users, MessageCircle, UserCheck } from "lucide-react";
 import { useTheme } from "next-themes";
 import { GalaxyThemed } from "@/components/ui/GalaxyThemed";
 import PillNav from "@/components/ui/PillNav";
+import AnimatedContent from "@/components/ui/AnimatedContent";
+import AnimatedThemeToggler from "@/components/ui/AnimatedThemeToggler";
 
 export default function HomePage() {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -107,7 +109,7 @@ export default function HomePage() {
           className="absolute top-[1em] left-4 md:left-8 z-[1002] transition-transform hover:scale-110"
         >
           <Image
-            src="/logo.svg"
+            src="/logo.png"
             alt="Nridesikart Logo"
             width={50}
             height={50}
@@ -127,24 +129,16 @@ export default function HomePage() {
             baseColor={currentTheme === "dark" ? "#1F2937" : "#FFFFFF"}
             pillColor={currentTheme === "dark" ? "#F97316" : "#FF6B35"}
             hoveredPillTextColor="#FFFFFF"
-            pillTextColor={currentTheme === "dark" ? "#E5E7EB" : "#1F2937"}
+            pillTextColor={currentTheme === "dark" ? "#E5E7EB" : "#000000"}
           />
         </div>
 
         {/* Right Section: Theme Toggle */}
         <div className="absolute top-[1em] right-4 md:right-8 z-[1002]">
-          <button
-            onClick={toggleTheme}
-            className="w-[44px] h-[44px] rounded-full bg-gradient-to-r from-orange-400 to-red-400 dark:from-purple-500 dark:to-pink-500 flex items-center justify-center hover:scale-110 transition-transform shadow-lg"
-            aria-label={`Switch to ${currentTheme === "light" ? "dark" : "light"} mode`}
-            title={`Switch to ${currentTheme === "light" ? "dark" : "light"} mode`}
-          >
-            {currentTheme === "light" ? (
-              <Moon className="w-5 h-5 text-white" strokeWidth={2} />
-            ) : (
-              <Sun className="w-5 h-5 text-white" strokeWidth={2} />
-            )}
-          </button>
+          <AnimatedThemeToggler
+            aria-label="Toggle theme"
+            title="Toggle theme"
+          />
         </div>
       </div>
 
@@ -153,49 +147,107 @@ export default function HomePage() {
         {/* Hero Section with Logo and Company Description */}
         <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-24 pb-16">
           {/* Large Logo */}
-          <div className="mb-8">
-            <Image
-              src="/logo.svg"
-              alt="Nridesikart Logo"
-              width={150}
-              height={150}
-              className="rounded-full shadow-2xl mx-auto"
-            />
-          </div>
+          <AnimatedContent
+            distance={80}
+            direction="vertical"
+            reverse={true}
+            duration={1}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            scale={0.9}
+            threshold={0.2}
+            delay={0.1}
+          >
+            <div className="mb-8">
+              <Image
+                src="/logo.png"
+                alt="Nridesikart Logo"
+                width={150}
+                height={150}
+                className="rounded-full shadow-2xl mx-auto"
+              />
+            </div>
+          </AnimatedContent>
 
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8">
-            <span className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 bg-clip-text text-transparent">
-              Nridesikart
-            </span>
-          </h1>
+          <AnimatedContent
+            distance={60}
+            direction="vertical"
+            reverse={true}
+            duration={1}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            threshold={0.2}
+            delay={0.3}
+          >
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-8">
+              <span className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 bg-clip-text text-transparent">
+                Nridesikart
+              </span>
+            </h1>
+          </AnimatedContent>
 
           {/* Company Description */}
-          <div className="max-w-4xl mx-auto bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-3xl p-8 md:p-12 border-2 border-orange-200 dark:border-orange-600 shadow-xl">
-            <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
-              Nridesikart is a dedicated digital platform built to support NRIs looking for dependable services and shopping solutions in India. Our platform enables Non-Resident Indians to access high-quality Indian services at reasonable costs, without the complexities of distance or coordination. We act as a reliable bridge between NRIs and India by offering carefully curated services, transparent pricing, and consistent support. With Nridesikart, your experience of shopping and availing services in India becomes efficient, trustworthy, and stress-free.
-            </p>
-          </div>
+          <AnimatedContent
+            distance={80}
+            direction="vertical"
+            duration={1}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            threshold={0.2}
+            delay={0.5}
+          >
+            <div className="max-w-4xl mx-auto bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-3xl p-8 md:p-12 border-2 border-orange-200 dark:border-orange-600 shadow-xl">
+              <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed">
+                Nridesikart is a dedicated digital platform built to support NRIs looking for dependable services and shopping solutions in India. Our platform enables Non-Resident Indians to access high-quality Indian services at reasonable costs, without the complexities of distance or coordination. We act as a reliable bridge between NRIs and India by offering carefully curated services, transparent pricing, and consistent support. With Nridesikart, your experience of shopping and availing services in India becomes efficient, trustworthy, and stress-free.
+              </p>
+            </div>
+          </AnimatedContent>
         </section>
 
         {/* How to Opt for Services Section */}
         <section className="py-20 px-4 md:px-8 lg:px-16">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-4">
-            How to Opt for Our Services
-          </h2>
-          <p className="text-center text-gray-600 dark:text-gray-400 mb-16 text-lg max-w-2xl mx-auto">
-            Follow these simple steps to begin your journey with Nridesikart
-          </p>
+          <AnimatedContent
+            distance={60}
+            direction="vertical"
+            reverse={true}
+            duration={0.9}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            threshold={0.15}
+          >
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-4">
+              How to Opt for Our Services
+            </h2>
+            <p className="text-center text-gray-600 dark:text-gray-400 mb-16 text-lg max-w-2xl mx-auto">
+              Follow these simple steps to begin your journey with Nridesikart
+            </p>
+          </AnimatedContent>
 
           <div className="max-w-5xl mx-auto space-y-8">
-            {steps.map((step) => {
+            {steps.map((step, index) => {
               const colorClasses = getColorClasses(step.color);
               const IconComponent = step.icon;
 
               return (
-                <div
+                <AnimatedContent
                   key={step.number}
-                  className={`bg-gradient-to-br ${colorClasses.bg} backdrop-blur-md rounded-3xl p-8 border-2 ${colorClasses.border} hover:shadow-2xl transition-all duration-300`}
+                  distance={100}
+                  direction="horizontal"
+                  reverse={index % 2 === 0}
+                  duration={0.9}
+                  ease="power3.out"
+                  initialOpacity={0}
+                  animateOpacity
+                  threshold={0.15}
+                  delay={index * 0.15}
                 >
+                  <div
+                    className={`bg-gradient-to-br ${colorClasses.bg} backdrop-blur-md rounded-3xl p-8 border-2 ${colorClasses.border} hover:shadow-2xl transition-all duration-300`}
+                  >
                   <div className="flex flex-col md:flex-row items-start gap-6">
                     {/* Step Number and Icon */}
                     <div className="flex items-center gap-4">
@@ -221,10 +273,10 @@ export default function HomePage() {
                         <div className="mt-6 space-y-4">
                           <p className="text-gray-800 dark:text-gray-200 font-medium">Once you join:</p>
                           <ul className="space-y-3">
-                            {step.subPoints.map((subPoint, index) => {
+                            {step.subPoints.map((subPoint, subIndex) => {
                               const SubIcon = subPoint.icon;
                               return (
-                                <li key={index} className="flex items-start gap-3 bg-white/50 dark:bg-gray-800/50 rounded-xl p-4">
+                                <li key={subIndex} className="flex items-start gap-3 bg-white/50 dark:bg-gray-800/50 rounded-xl p-4">
                                   <div className={`w-8 h-8 rounded-full ${colorClasses.icon} flex items-center justify-center flex-shrink-0`}>
                                     <SubIcon className="w-4 h-4 text-white" strokeWidth={2} />
                                   </div>
@@ -239,7 +291,8 @@ export default function HomePage() {
                       )}
                     </div>
                   </div>
-                </div>
+                  </div>
+                </AnimatedContent>
               );
             })}
           </div>
@@ -247,20 +300,31 @@ export default function HomePage() {
 
         {/* Closing Statement Section */}
         <section className="py-20 px-4 md:px-8 lg:px-16">
-          <div className="max-w-4xl mx-auto text-center bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 backdrop-blur-md rounded-3xl p-8 md:p-12 border-2 border-orange-300 dark:border-orange-600 shadow-xl">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
-              Your Nridesikart Journey Begins Here
-            </h2>
-            <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
-              From service selection to successful execution, Nridesikart acts as a trusted bridge between NRIs and dependable service providers in India—making your experience simple, transparent, and stress-free.
-            </p>
-            <Link
-              href="/services"
-              className="px-10 py-4 text-lg font-bold rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-2xl hover:scale-105 inline-block"
-            >
-              Explore Services →
-            </Link>
-          </div>
+          <AnimatedContent
+            distance={80}
+            direction="vertical"
+            duration={1}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            scale={0.95}
+            threshold={0.15}
+          >
+            <div className="max-w-4xl mx-auto text-center bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 backdrop-blur-md rounded-3xl p-8 md:p-12 border-2 border-orange-300 dark:border-orange-600 shadow-xl">
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6">
+                Your Nridesikart Journey Begins Here
+              </h2>
+              <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed mb-8">
+                From service selection to successful execution, Nridesikart acts as a trusted bridge between NRIs and dependable service providers in India—making your experience simple, transparent, and stress-free.
+              </p>
+              <Link
+                href="/services"
+                className="px-10 py-4 text-lg font-bold rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-2xl hover:scale-105 inline-block"
+              >
+                Explore Services →
+              </Link>
+            </div>
+          </AnimatedContent>
         </section>
       </div>
 

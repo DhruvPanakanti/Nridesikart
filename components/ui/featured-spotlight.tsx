@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { ArrowUpRight } from "lucide-react"
+import Link from "next/link"
 
 interface FeaturedSpotlightProps {
   label?: string;
@@ -11,6 +12,8 @@ interface FeaturedSpotlightProps {
   imageUrl: string;
   index: string;
   imageAlt?: string;
+  serviceSlug?: string;
+  onChooseService?: () => void;
 }
 
 export function FeaturedSpotlight({
@@ -20,7 +23,9 @@ export function FeaturedSpotlight({
   description,
   imageUrl,
   index,
-  imageAlt = "Service image"
+  imageAlt = "Service image",
+  serviceSlug,
+  onChooseService
 }: FeaturedSpotlightProps) {
   const [isHovered, setIsHovered] = useState(false)
 
@@ -87,38 +92,88 @@ export function FeaturedSpotlight({
         </p>
 
         {/* Minimal CTA - responsive spacing */}
-        <div className="mt-6 flex items-center gap-4 md:mt-8 lg:mt-10">
-          <div
-            className="flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-500 md:h-11 md:w-11 lg:h-12 lg:w-12"
-            style={{
-              borderColor: isHovered ? "#f97316" : "rgb(107 114 128 / 0.3)",
-              backgroundColor: isHovered ? "#f97316" : "transparent",
-              color: isHovered ? "#ffffff" : "#f97316",
-              transform: isHovered ? "scale(1.05)" : "scale(1)",
-              boxShadow: isHovered ? "0 8px 32px rgb(249 115 22 / 0.3)" : "0 0 0 transparent",
-              transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-            }}
-          >
-            <ArrowUpRight
-              className="h-3.5 w-3.5 transition-transform duration-500 md:h-4 md:w-4"
+        {serviceSlug ? (
+          <Link href={`/services/${serviceSlug}`} className="mt-6 flex items-center gap-4 md:mt-8 lg:mt-10">
+            <div
+              className="flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-500 md:h-11 md:w-11 lg:h-12 lg:w-12"
               style={{
-                transform: isHovered ? "rotate(45deg)" : "rotate(0deg)",
+                borderColor: isHovered ? "#f97316" : "rgb(107 114 128 / 0.3)",
+                backgroundColor: isHovered ? "#f97316" : "transparent",
+                color: isHovered ? "#ffffff" : "#f97316",
+                transform: isHovered ? "scale(1.05)" : "scale(1)",
+                boxShadow: isHovered ? "0 8px 32px rgb(249 115 22 / 0.3)" : "0 0 0 transparent",
                 transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
               }}
-            />
+            >
+              <ArrowUpRight
+                className="h-3.5 w-3.5 transition-transform duration-500 md:h-4 md:w-4"
+                style={{
+                  transform: isHovered ? "rotate(45deg)" : "rotate(0deg)",
+                  transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                }}
+              />
+            </div>
+            <span
+              className="text-[10px] font-medium uppercase tracking-widest transition-all duration-700 md:text-xs text-gray-900 dark:text-white"
+              style={{
+                opacity: isHovered ? 1 : 0.5,
+                transform: isHovered ? "translateX(0)" : "translateX(-8px)",
+                transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                transitionDelay: isHovered ? "100ms" : "0ms",
+              }}
+            >
+              Explore
+            </span>
+          </Link>
+        ) : (
+          <div className="mt-6 flex items-center gap-4 md:mt-8 lg:mt-10">
+            <div
+              className="flex h-10 w-10 items-center justify-center rounded-full border transition-all duration-500 md:h-11 md:w-11 lg:h-12 lg:w-12"
+              style={{
+                borderColor: isHovered ? "#f97316" : "rgb(107 114 128 / 0.3)",
+                backgroundColor: isHovered ? "#f97316" : "transparent",
+                color: isHovered ? "#ffffff" : "#f97316",
+                transform: isHovered ? "scale(1.05)" : "scale(1)",
+                boxShadow: isHovered ? "0 8px 32px rgb(249 115 22 / 0.3)" : "0 0 0 transparent",
+                transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+              }}
+            >
+              <ArrowUpRight
+                className="h-3.5 w-3.5 transition-transform duration-500 md:h-4 md:w-4"
+                style={{
+                  transform: isHovered ? "rotate(45deg)" : "rotate(0deg)",
+                  transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                }}
+              />
+            </div>
+            <span
+              className="text-[10px] font-medium uppercase tracking-widest transition-all duration-700 md:text-xs text-gray-900 dark:text-white"
+              style={{
+                opacity: isHovered ? 1 : 0.5,
+                transform: isHovered ? "translateX(0)" : "translateX(-8px)",
+                transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                transitionDelay: isHovered ? "100ms" : "0ms",
+              }}
+            >
+              Explore
+            </span>
           </div>
-          <span
-            className="text-[10px] font-medium uppercase tracking-widest transition-all duration-700 md:text-xs text-gray-900 dark:text-white"
-            style={{
-              opacity: isHovered ? 1 : 0.5,
-              transform: isHovered ? "translateX(0)" : "translateX(-8px)",
-              transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-              transitionDelay: isHovered ? "100ms" : "0ms",
-            }}
-          >
-            Explore
-          </span>
-        </div>
+        )}
+
+        {/* Choose Service Button */}
+        {onChooseService && (
+          <div className="mt-4">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onChooseService();
+              }}
+              className="px-6 py-3 bg-gradient-to-r from-orange-500 to-red-600 text-white font-semibold text-sm rounded-full hover:from-orange-600 hover:to-red-700 transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+            >
+              Choose Service
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Right: Image Block */}

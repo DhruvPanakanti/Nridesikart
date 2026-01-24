@@ -3,10 +3,12 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Sun, Moon, Shield, Shirt, Home, Car, Users, Target, Heart, Globe, Mail, Phone, MapPin, Clock, Send, ArrowRight } from "lucide-react";
+import { Shield, Shirt, Home, Heart, Car, ArrowRight, Phone, Mail, MapPin, Clock, Users, Target, Globe, Send } from "lucide-react";
 import { useTheme } from "next-themes";
 import { GalaxyThemed } from "@/components/ui/GalaxyThemed";
 import PillNav from "@/components/ui/PillNav";
+import AnimatedContent from "@/components/ui/AnimatedContent";
+import AnimatedThemeToggler from "@/components/ui/AnimatedThemeToggler";
 
 export default function LandingPage() {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -46,6 +48,7 @@ export default function LandingPage() {
   const services = [
     {
       id: "insurance",
+      slug: "life-insurance",
       title: "Life Insurance",
       description: "Secure your family's future with comprehensive Indian insurance policies. We partner with top insurance providers in India to offer you the best coverage options.",
       icon: Shield,
@@ -55,17 +58,30 @@ export default function LandingPage() {
       iconBg: "bg-blue-500 dark:bg-blue-600"
     },
     {
-      id: "tailoring",
-      title: "Fabrics & Tailoring",
-      description: "Premium Indian fabrics and expert custom tailoring services. Get authentic Indian clothing made to your exact measurements and delivered to your doorstep.",
+      id: "fabrics",
+      slug: "fabrics",
+      title: "Varanasi Fabrics",
+      description: "Premium Varanasi silk fabrics known for rich heritage, fine textures, and intricate zari weaving. Traditional craftsmanship for festive wear and special occasions.",
       icon: Shirt,
-      features: ["Silk Sarees", "Custom Suits & Sherwanis", "Bridal Wear", "Traditional Outfits"],
+      features: ["Banarasi Silk", "Zari Weaving", "Traditional Motifs", "Festive Collections"],
       bgGradient: "from-pink-50 to-rose-100 dark:from-pink-900/20 dark:to-rose-900/20",
       borderColor: "border-pink-200 dark:border-pink-600",
       iconBg: "bg-pink-500 dark:bg-pink-600"
     },
     {
+      id: "tailoring",
+      slug: "tailoring",
+      title: "Custom Tailoring",
+      description: "Expert custom tailoring services offering perfect fit, comfort, and style. From traditional ethnic wear to modern outfits with attention to detail.",
+      icon: Shirt,
+      features: ["Custom Suits & Sherwanis", "Bridal Wear", "Traditional Outfits", "Perfect Fit Guarantee"],
+      bgGradient: "from-purple-50 to-violet-100 dark:from-purple-900/20 dark:to-violet-900/20",
+      borderColor: "border-purple-200 dark:border-purple-600",
+      iconBg: "bg-purple-500 dark:bg-purple-600"
+    },
+    {
       id: "realestate",
+      slug: "real-estate",
       title: "Real Estate",
       description: "Smart property investments across India with expert guidance. Whether you're looking to buy, sell, or invest in Indian real estate, we've got you covered.",
       icon: Home,
@@ -75,11 +91,23 @@ export default function LandingPage() {
       iconBg: "bg-green-500 dark:bg-green-600"
     },
     {
+      id: "jewelry",
+      slug: "jewelry",
+      title: "Traditional Jewelry",
+      description: "Exquisite Indian jewelry crafted with precision. From traditional gold ornaments to contemporary designs, bring home authentic Indian craftsmanship.",
+      icon: Heart,
+      features: ["Gold Ornaments", "Bridal Sets", "Temple Jewelry", "Contemporary Designs"],
+      bgGradient: "from-yellow-50 to-amber-100 dark:from-yellow-900/20 dark:to-amber-900/20",
+      borderColor: "border-yellow-200 dark:border-yellow-600",
+      iconBg: "bg-yellow-500 dark:bg-yellow-600"
+    },
+    {
       id: "auto",
+      slug: "auto-ads",
       title: "Auto Advertisements",
-      description: "Buy, sell, or advertise vehicles in India hassle-free. Our platform connects you with verified buyers and sellers across major Indian cities.",
+      description: "Promote your business across India with auto rickshaw advertising. Reach local communities effectively with mobile billboard solutions.",
       icon: Car,
-      features: ["Vehicle Listings", "Buyer-Seller Matching", "Price Negotiation", "Documentation Help"],
+      features: ["Mobile Billboards", "Route Planning", "Brand Visibility", "Cost-Effective Marketing"],
       bgGradient: "from-amber-50 to-orange-100 dark:from-amber-900/20 dark:to-orange-900/20",
       borderColor: "border-amber-200 dark:border-amber-600",
       iconBg: "bg-amber-500 dark:bg-amber-600"
@@ -115,7 +143,7 @@ export default function LandingPage() {
           className="absolute top-[1em] left-4 md:left-8 z-[1002] transition-transform hover:scale-110"
         >
           <Image
-            src="/logo.svg"
+            src="/logo.png"
             alt="Nridesikart Logo"
             width={50}
             height={50}
@@ -136,25 +164,16 @@ export default function LandingPage() {
             baseColor={currentTheme === "dark" ? "#1F2937" : "#FFFFFF"}
             pillColor={currentTheme === "dark" ? "#F97316" : "#FF6B35"}
             hoveredPillTextColor="#FFFFFF"
-            pillTextColor={currentTheme === "dark" ? "#E5E7EB" : "#1F2937"}
+            pillTextColor={currentTheme === "dark" ? "#E5E7EB" : "#000000"}
           />
         </div>
 
         {/* Right Section: Theme Toggle */}
         <div className="absolute top-[1em] right-4 md:right-8 z-[1002]">
-          {/* Theme Toggle */}
-          <button
-            onClick={toggleTheme}
-            className="w-[44px] h-[44px] rounded-full bg-gradient-to-r from-orange-400 to-red-400 dark:from-purple-500 dark:to-pink-500 flex items-center justify-center hover:scale-110 transition-transform shadow-lg"
-            aria-label={`Switch to ${currentTheme === "light" ? "dark" : "light"} mode`}
-            title={`Switch to ${currentTheme === "light" ? "dark" : "light"} mode`}
-          >
-            {currentTheme === "light" ? (
-              <Moon className="w-5 h-5 text-white" strokeWidth={2} />
-            ) : (
-              <Sun className="w-5 h-5 text-white" strokeWidth={2} />
-            )}
-          </button>
+          <AnimatedThemeToggler
+            aria-label="Toggle theme"
+            title="Toggle theme"
+          />
         </div>
       </div>
 
@@ -162,190 +181,441 @@ export default function LandingPage() {
       <div className="relative z-10">
         {/* Hero Section */}
         <section id="hero" className="min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20">
-          <div className="inline-block px-6 py-2 rounded-full bg-orange-100 dark:bg-orange-900/30 border-2 border-orange-300 dark:border-orange-600 mb-6">
-            <span className="text-orange-700 dark:text-orange-300 font-semibold text-sm">
-              🇮🇳 Connecting NRIs with India Since 2024
-            </span>
-          </div>
-
-          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6 animate-fade-in">
-            Welcome to{" "}
-            <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
-              Nridesikart
-            </span>
-          </h1>
-
-          <p className="text-lg md:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-6 leading-relaxed">
-            Experience authentic Indian services from the comfort of your home in the USA
-          </p>
-
-          <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-12">
-            From life insurance to custom tailoring, real estate investments to automobile deals —
-            we bring India to your doorstep
-          </p>
-
-          <Link
-            href="/home"
-            className="px-10 py-4 text-lg font-bold rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-2xl hover:scale-105"
+          <AnimatedContent
+            distance={60}
+            direction="vertical"
+            reverse={true}
+            duration={0.9}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            threshold={0.2}
+            delay={0.1}
           >
-            Explore Our Services →
-          </Link>
+            <div className="inline-block px-6 py-2 rounded-full bg-orange-100 dark:bg-orange-900/30 border-2 border-orange-300 dark:border-orange-600 mb-6">
+              <span className="text-orange-700 dark:text-orange-300 font-semibold text-sm">
+                🇮🇳 Connecting NRIs with India Since 2025
+              </span>
+            </div>
+          </AnimatedContent>
+
+          <AnimatedContent
+            distance={80}
+            direction="vertical"
+            reverse={true}
+            duration={1}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            threshold={0.2}
+            delay={0.25}
+          >
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-gray-900 dark:text-white mb-6">
+              Welcome to{" "}
+              <span className="bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+                Nridesikart
+              </span>
+            </h1>
+          </AnimatedContent>
+
+          <AnimatedContent
+            distance={60}
+            direction="vertical"
+            duration={0.9}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            threshold={0.2}
+            delay={0.4}
+          >
+            <p className="text-lg md:text-xl lg:text-2xl text-gray-700 dark:text-gray-300 max-w-3xl mx-auto mb-6 leading-relaxed">
+              Experience authentic Indian services from the comfort of your home in the USA
+            </p>
+          </AnimatedContent>
+
+          <AnimatedContent
+            distance={50}
+            direction="vertical"
+            duration={0.9}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            threshold={0.2}
+            delay={0.55}
+          >
+            <p className="text-base md:text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-12">
+              From life insurance to custom tailoring, real estate investments to automobile deals —
+              we bring India to your doorstep
+            </p>
+          </AnimatedContent>
+
+          <AnimatedContent
+            distance={40}
+            direction="vertical"
+            duration={0.8}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            scale={0.9}
+            threshold={0.2}
+            delay={0.7}
+          >
+            <Link
+              href="/home"
+              className="px-10 py-4 text-lg font-bold rounded-full bg-gradient-to-r from-orange-500 to-red-500 text-white hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-2xl hover:scale-105"
+            >
+              Explore Our Services →
+            </Link>
+          </AnimatedContent>
         </section>
 
         {/* How We Work Section */}
         <section id="how-it-works" className="py-20 px-4 md:px-8 lg:px-16 bg-white/50 dark:bg-gray-800/30">
-          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-4">
-            How We Work
-          </h2>
-          <p className="text-center text-gray-600 dark:text-gray-400 mb-16 text-lg">
-            Simple, transparent, and reliable — three easy steps to get started
-          </p>
+          <AnimatedContent
+            distance={60}
+            direction="vertical"
+            reverse={true}
+            duration={0.9}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            threshold={0.15}
+          >
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 dark:text-white text-center mb-4">
+              How We Work
+            </h2>
+            <p className="text-center text-gray-600 dark:text-gray-400 mb-16 text-lg">
+              Simple, transparent, and reliable — four easy steps to get started
+            </p>
+          </AnimatedContent>
 
-          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {/* Step 1 */}
-            <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 hover:border-orange-400 dark:hover:border-orange-400 hover:shadow-2xl transition-all duration-300">
-              <div className="text-6xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent mb-4">
-                1
+            <AnimatedContent
+              distance={80}
+              direction="horizontal"
+              reverse={true}
+              duration={0.9}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              threshold={0.15}
+              delay={0.1}
+            >
+              <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 hover:border-orange-400 dark:hover:border-orange-400 hover:shadow-2xl transition-all duration-300 h-full">
+                <div className="text-6xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent mb-4">
+                  1
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                  Browse Services
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
+                  Explore our wide range of Indian services tailored specifically for NRIs living in the USA
+                </p>
               </div>
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-                Browse Services
-              </h3>
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
-                Explore our wide range of Indian services tailored specifically for NRIs living in the USA
-              </p>
-            </div>
+            </AnimatedContent>
 
             {/* Step 2 */}
-            <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 hover:border-orange-400 dark:hover:border-orange-400 hover:shadow-2xl transition-all duration-300">
-              <div className="text-6xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent mb-4">
-                2
+            <AnimatedContent
+              distance={80}
+              direction="vertical"
+              duration={0.9}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              threshold={0.15}
+              delay={0.2}
+            >
+              <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 hover:border-orange-400 dark:hover:border-orange-400 hover:shadow-2xl transition-all duration-300 h-full">
+                <div className="text-6xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent mb-4">
+                  2
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                  Choose Services
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
+                  Select your desired services and add them to your cart for a personalized experience
+                </p>
               </div>
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-                Place Your Order
-              </h3>
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
-                Select your desired service and provide necessary details through our secure platform
-              </p>
-            </div>
+            </AnimatedContent>
 
             {/* Step 3 */}
-            <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 hover:border-orange-400 dark:hover:border-orange-400 hover:shadow-2xl transition-all duration-300">
-              <div className="text-6xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent mb-4">
-                3
+            <AnimatedContent
+              distance={80}
+              direction="vertical"
+              duration={0.9}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              threshold={0.15}
+              delay={0.3}
+            >
+              <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 hover:border-orange-400 dark:hover:border-orange-400 hover:shadow-2xl transition-all duration-300 h-full">
+                <div className="text-6xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent mb-4">
+                  3
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                  Join Community
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
+                  Become part of our NRI community and stay connected with exclusive updates and offers
+                </p>
               </div>
-              <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
-                We Deliver
-              </h3>
-              <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
-                Our trusted team in India processes your request and delivers results directly to you
-              </p>
-            </div>
+            </AnimatedContent>
+
+            {/* Step 4 */}
+            <AnimatedContent
+              distance={80}
+              direction="horizontal"
+              duration={0.9}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              threshold={0.15}
+              delay={0.4}
+            >
+              <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 hover:border-orange-400 dark:hover:border-orange-400 hover:shadow-2xl transition-all duration-300 h-full">
+                <div className="text-6xl font-bold bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent mb-4">
+                  4
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-4">
+                  Get Connected
+                </h3>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base">
+                  Get connected directly with the service provider for personalized assistance
+                </p>
+              </div>
+            </AnimatedContent>
           </div>
         </section>
 
         {/* About Section */}
         <section id="about" className="py-20 px-4 md:px-8 lg:px-16">
-          <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
-              About Nridesikart
-            </h2>
-            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
-              Your trusted bridge to India, offering authentic Indian services
-              to Non-Resident Indians living in the USA.
-            </p>
-          </div>
+          <AnimatedContent
+            distance={70}
+            direction="vertical"
+            reverse={true}
+            duration={0.9}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            threshold={0.15}
+          >
+            <div className="max-w-4xl mx-auto text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+                About Nridesikart
+              </h2>
+              <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
+                Your trusted bridge to India, offering authentic Indian services
+                to Non-Resident Indians living in the USA.
+              </p>
+            </div>
+          </AnimatedContent>
 
           {/* Our Story */}
           <div className="max-w-6xl mx-auto mb-16">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center mb-12">
-              Our Story
-            </h3>
+            <AnimatedContent
+              distance={50}
+              direction="vertical"
+              reverse={true}
+              duration={0.8}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              threshold={0.15}
+            >
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center mb-12">
+                Our Story
+              </h3>
+            </AnimatedContent>
             <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-                  Founded in 2024, Nridesikart was born from a simple observation: NRIs often struggle 
-                  to access reliable services back home in India. Whether it&apos;s securing life insurance, 
-                  getting custom tailoring done, investing in real estate, or buying/selling vehicles — 
-                  the distance makes everything complicated.
-                </p>
-                <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
-                  We bridge that gap. Our team of dedicated professionals in both the USA and India 
-                  ensures seamless service delivery, bringing the comfort and reliability of Indian 
-                  services right to your doorstep in America.
-                </p>
-              </div>
-              <div className="bg-gradient-to-br from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600">
-                <div className="text-6xl font-bold text-orange-600 dark:text-orange-400 mb-4">2024</div>
-                <p className="text-xl text-gray-700 dark:text-gray-300">Year Founded</p>
-                <div className="mt-6 pt-6 border-t border-orange-200 dark:border-orange-600">
-                  <div className="text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2">5000+</div>
-                  <p className="text-lg text-gray-700 dark:text-gray-300">Happy Customers Served</p>
+              <AnimatedContent
+                distance={80}
+                direction="horizontal"
+                reverse={true}
+                duration={0.9}
+                ease="power3.out"
+                initialOpacity={0}
+                animateOpacity
+                threshold={0.15}
+              >
+                <div>
+                  <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                    Founded in 2025, Nridesikart was born from a simple observation: NRIs often struggle 
+                    to access reliable services back home in India. Whether it&apos;s securing life insurance, 
+                    getting custom tailoring done, investing in real estate, or buying/selling vehicles — 
+                    the distance makes everything complicated.
+                  </p>
+                  <p className="text-lg text-gray-700 dark:text-gray-300 leading-relaxed">
+                    We bridge that gap. Our team of dedicated professionals in both the USA and India 
+                    ensures seamless service delivery, bringing the comfort and reliability of Indian 
+                    services right to your doorstep in America.
+                  </p>
                 </div>
-              </div>
+              </AnimatedContent>
+              <AnimatedContent
+                distance={80}
+                direction="horizontal"
+                duration={0.9}
+                ease="power3.out"
+                initialOpacity={0}
+                animateOpacity
+                threshold={0.15}
+                delay={0.15}
+              >
+                <div className="bg-gradient-to-br from-orange-100 to-red-100 dark:from-orange-900/30 dark:to-red-900/30 rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600">
+                  <div className="text-6xl font-bold text-orange-600 dark:text-orange-400 mb-4">2025</div>
+                  <p className="text-xl text-gray-700 dark:text-gray-300">Year Founded</p>
+                  <div className="mt-6 pt-6 border-t border-orange-200 dark:border-orange-600">
+                    <div className="text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2">5000+</div>
+                    <p className="text-lg text-gray-700 dark:text-gray-300">Happy Customers Served</p>
+                  </div>
+                </div>
+              </AnimatedContent>
             </div>
           </div>
 
           {/* Our Values */}
           <div className="max-w-6xl mx-auto">
-            <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center mb-12">
-              Our Values
-            </h3>
+            <AnimatedContent
+              distance={50}
+              direction="vertical"
+              reverse={true}
+              duration={0.8}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              threshold={0.15}
+            >
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white text-center mb-12">
+                Our Values
+              </h3>
+            </AnimatedContent>
             <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 text-center hover:shadow-2xl transition-all duration-300">
-                <div className="w-16 h-16 rounded-full bg-orange-500 flex items-center justify-center mx-auto mb-4">
-                  <Heart className="w-8 h-8 text-white" strokeWidth={2} />
+              <AnimatedContent
+                distance={60}
+                direction="vertical"
+                duration={0.8}
+                ease="power3.out"
+                initialOpacity={0}
+                animateOpacity
+                scale={0.9}
+                threshold={0.15}
+                delay={0}
+              >
+                <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 text-center hover:shadow-2xl transition-all duration-300 h-full">
+                  <div className="w-16 h-16 rounded-full bg-orange-500 flex items-center justify-center mx-auto mb-4">
+                    <Heart className="w-8 h-8 text-white" strokeWidth={2} />
+                  </div>
+                  <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Trust</h4>
+                  <p className="text-gray-700 dark:text-gray-300">Building lasting relationships through honesty and transparency</p>
                 </div>
-                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Trust</h4>
-                <p className="text-gray-700 dark:text-gray-300">Building lasting relationships through honesty and transparency</p>
-              </div>
+              </AnimatedContent>
 
-              <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 text-center hover:shadow-2xl transition-all duration-300">
-                <div className="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center mx-auto mb-4">
-                  <Target className="w-8 h-8 text-white" strokeWidth={2} />
+              <AnimatedContent
+                distance={60}
+                direction="vertical"
+                duration={0.8}
+                ease="power3.out"
+                initialOpacity={0}
+                animateOpacity
+                scale={0.9}
+                threshold={0.15}
+                delay={0.1}
+              >
+                <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 text-center hover:shadow-2xl transition-all duration-300 h-full">
+                  <div className="w-16 h-16 rounded-full bg-red-500 flex items-center justify-center mx-auto mb-4">
+                    <Target className="w-8 h-8 text-white" strokeWidth={2} />
+                  </div>
+                  <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Quality</h4>
+                  <p className="text-gray-700 dark:text-gray-300">Delivering excellence in every service we provide</p>
                 </div>
-                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Quality</h4>
-                <p className="text-gray-700 dark:text-gray-300">Delivering excellence in every service we provide</p>
-              </div>
+              </AnimatedContent>
 
-              <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 text-center hover:shadow-2xl transition-all duration-300">
-                <div className="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-white" strokeWidth={2} />
+              <AnimatedContent
+                distance={60}
+                direction="vertical"
+                duration={0.8}
+                ease="power3.out"
+                initialOpacity={0}
+                animateOpacity
+                scale={0.9}
+                threshold={0.15}
+                delay={0.2}
+              >
+                <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 text-center hover:shadow-2xl transition-all duration-300 h-full">
+                  <div className="w-16 h-16 rounded-full bg-amber-500 flex items-center justify-center mx-auto mb-4">
+                    <Users className="w-8 h-8 text-white" strokeWidth={2} />
+                  </div>
+                  <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Community</h4>
+                  <p className="text-gray-700 dark:text-gray-300">Strengthening the NRI community connection with India</p>
                 </div>
-                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Community</h4>
-                <p className="text-gray-700 dark:text-gray-300">Strengthening the NRI community connection with India</p>
-              </div>
+              </AnimatedContent>
 
-              <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 text-center hover:shadow-2xl transition-all duration-300">
-                <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center mx-auto mb-4">
-                  <Globe className="w-8 h-8 text-white" strokeWidth={2} />
+              <AnimatedContent
+                distance={60}
+                direction="vertical"
+                duration={0.8}
+                ease="power3.out"
+                initialOpacity={0}
+                animateOpacity
+                scale={0.9}
+                threshold={0.15}
+                delay={0.3}
+              >
+                <div className="bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-3xl p-8 border-2 border-orange-200 dark:border-orange-600 text-center hover:shadow-2xl transition-all duration-300 h-full">
+                  <div className="w-16 h-16 rounded-full bg-green-500 flex items-center justify-center mx-auto mb-4">
+                    <Globe className="w-8 h-8 text-white" strokeWidth={2} />
+                  </div>
+                  <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Reach</h4>
+                  <p className="text-gray-700 dark:text-gray-300">Serving 50+ cities across India with local expertise</p>
                 </div>
-                <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">Reach</h4>
-                <p className="text-gray-700 dark:text-gray-300">Serving 50+ cities across India with local expertise</p>
-              </div>
+              </AnimatedContent>
             </div>
           </div>
         </section>
 
         {/* Services Section - Expanded */}
         <section id="services" className="py-20 px-4 md:px-8 lg:px-16 bg-white/50 dark:bg-gray-800/30">
-          <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
-              Our Services
-            </h2>
-            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
-              Comprehensive solutions for all your India-related needs. 
-              Quality service, transparent pricing, and reliable delivery.
-            </p>
-          </div>
+          <AnimatedContent
+            distance={70}
+            direction="vertical"
+            reverse={true}
+            duration={0.9}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            threshold={0.15}
+          >
+            <div className="max-w-4xl mx-auto text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+                Our Services
+              </h2>
+              <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
+                Comprehensive solutions for all your India-related needs. 
+                Quality service, transparent pricing, and reliable delivery.
+              </p>
+            </div>
+          </AnimatedContent>
 
           <div className="max-w-7xl mx-auto space-y-12">
             {services.map((service, index) => {
               const IconComponent = service.icon;
               return (
-                <div
+                <AnimatedContent
                   key={service.id}
-                  className={`bg-gradient-to-br ${service.bgGradient} backdrop-blur-md rounded-3xl p-8 md:p-12 border-2 ${service.borderColor} hover:shadow-2xl transition-all duration-300`}
+                  distance={100}
+                  direction="horizontal"
+                  reverse={index % 2 === 0}
+                  duration={0.9}
+                  ease="power3.out"
+                  initialOpacity={0}
+                  animateOpacity
+                  threshold={0.15}
                 >
+                  <div
+                    className={`bg-gradient-to-br ${service.bgGradient} backdrop-blur-md rounded-3xl p-8 md:p-12 border-2 ${service.borderColor} hover:shadow-2xl transition-all duration-300`}
+                  >
                   <div className={`grid md:grid-cols-2 gap-8 items-center ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
                     <div className={index % 2 === 1 ? 'md:order-2' : ''}>
                       <div className={`w-20 h-20 rounded-full ${service.iconBg} flex items-center justify-center mb-6`}>
@@ -358,10 +628,10 @@ export default function LandingPage() {
                         {service.description}
                       </p>
                       <Link
-                        href={`/services/${service.id}`}
+                        href={`/services/${service.slug}`}
                         className="inline-flex items-center gap-2 px-8 py-3 bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold rounded-full hover:from-orange-600 hover:to-red-600 transition-all duration-300 shadow-lg hover:scale-105"
                       >
-                        Learn More <ArrowRight className="w-5 h-5" />
+                        Explore Services <ArrowRight className="w-5 h-5" />
                       </Link>
                     </div>
                     <div className={index % 2 === 1 ? 'md:order-1' : ''}>
@@ -380,7 +650,8 @@ export default function LandingPage() {
                       </div>
                     </div>
                   </div>
-                </div>
+                  </div>
+                </AnimatedContent>
               );
             })}
           </div>
@@ -388,36 +659,57 @@ export default function LandingPage() {
 
         {/* Trust Indicators Section */}
         <section className="py-16 px-4 bg-gradient-to-r from-orange-100 to-red-100 dark:from-orange-900/20 dark:to-red-900/20">
-          <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-              <div className="text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2">5000+</div>
-              <div className="text-gray-700 dark:text-gray-300 text-base">Happy Customers</div>
+          <AnimatedContent
+            distance={60}
+            direction="vertical"
+            duration={0.9}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            threshold={0.15}
+          >
+            <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+              <div>
+                <div className="text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2">5000+</div>
+                <div className="text-gray-700 dark:text-gray-300 text-base">Happy Customers</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2">15+</div>
+                <div className="text-gray-700 dark:text-gray-300 text-base">Years Experience</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2">50+</div>
+                <div className="text-gray-700 dark:text-gray-300 text-base">Indian Cities</div>
+              </div>
+              <div>
+                <div className="text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2">24/7</div>
+                <div className="text-gray-700 dark:text-gray-300 text-base">Support Available</div>
+              </div>
             </div>
-            <div>
-              <div className="text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2">15+</div>
-              <div className="text-gray-700 dark:text-gray-300 text-base">Years Experience</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2">50+</div>
-              <div className="text-gray-700 dark:text-gray-300 text-base">Indian Cities</div>
-            </div>
-            <div>
-              <div className="text-4xl font-bold text-orange-600 dark:text-orange-400 mb-2">24/7</div>
-              <div className="text-gray-700 dark:text-gray-300 text-base">Support Available</div>
-            </div>
-          </div>
+          </AnimatedContent>
         </section>
 
         {/* Contact Section */}
         <section id="contact" className="py-20 px-4 md:px-8 lg:px-16">
-          <div className="max-w-4xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
-              Contact Us
-            </h2>
-            <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
-              Have questions? We&apos;re here to help. Reach out to us and we&apos;ll respond as soon as possible.
-            </p>
-          </div>
+          <AnimatedContent
+            distance={70}
+            direction="vertical"
+            reverse={true}
+            duration={0.9}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            threshold={0.15}
+          >
+            <div className="max-w-4xl mx-auto text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold mb-8 bg-gradient-to-r from-orange-500 to-red-500 bg-clip-text text-transparent">
+                Contact Us
+              </h2>
+              <p className="text-xl md:text-2xl text-gray-700 dark:text-gray-300 leading-relaxed">
+                Have questions? We&apos;re here to help. Reach out to us and we&apos;ll respond as soon as possible.
+              </p>
+            </div>
+          </AnimatedContent>
 
           <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
             {/* Contact Info */}
@@ -433,8 +725,7 @@ export default function LandingPage() {
                   </div>
                   <div>
                     <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Email Us</h4>
-                    <p className="text-gray-700 dark:text-gray-300">support@nridesikart.com</p>
-                    <p className="text-gray-700 dark:text-gray-300">info@nridesikart.com</p>
+                    <p className="text-gray-700 dark:text-gray-300">nridesikart064@gmail.com</p>
                   </div>
                 </div>
 
@@ -444,30 +735,8 @@ export default function LandingPage() {
                   </div>
                   <div>
                     <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Call Us</h4>
-                    <p className="text-gray-700 dark:text-gray-300">USA: +1 (555) 123-4567</p>
-                    <p className="text-gray-700 dark:text-gray-300">India: +91 98765 43210</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-2xl p-6 border-2 border-orange-200 dark:border-orange-600">
-                  <div className="w-12 h-12 rounded-full bg-amber-500 flex items-center justify-center flex-shrink-0">
-                    <MapPin className="w-6 h-6 text-white" strokeWidth={2} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Our Offices</h4>
-                    <p className="text-gray-700 dark:text-gray-300">USA: 123 Business Ave, New York, NY 10001</p>
-                    <p className="text-gray-700 dark:text-gray-300">India: 456 Commerce St, Mumbai 400001</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4 bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-2xl p-6 border-2 border-orange-200 dark:border-orange-600">
-                  <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
-                    <Clock className="w-6 h-6 text-white" strokeWidth={2} />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Business Hours</h4>
-                    <p className="text-gray-700 dark:text-gray-300">Monday - Friday: 9 AM - 6 PM (EST)</p>
-                    <p className="text-gray-700 dark:text-gray-300">24/7 Online Support Available</p>
+                    <p className="text-gray-700 dark:text-gray-300">USA: +1 (703) 663-0999</p>
+                    <p className="text-gray-700 dark:text-gray-300">India: +91 8074987228</p>
                   </div>
                 </div>
               </div>
@@ -598,7 +867,7 @@ export default function LandingPage() {
       <footer className="bg-gray-900 dark:bg-black text-white py-12 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-gray-400 text-base mb-4">
-            © 2024 Nridesikart. All rights reserved.
+            © 2025 Nridesikart. All rights reserved.
           </p>
           <div className="flex justify-center gap-6 text-sm">
             <Link href="/privacy" className="hover:text-orange-400 transition-colors">
