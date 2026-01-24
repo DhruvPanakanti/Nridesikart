@@ -119,8 +119,17 @@
   * {
     @apply border-border outline-ring/50;
   }
+  html {
+    scroll-behavior: auto !important;
+  }
   body {
     @apply bg-background text-foreground;
+  }
+  /* Prevent input focus from causing scroll jumps */
+  input:focus,
+  textarea:focus,
+  select:focus {
+    scroll-margin-top: 100px;
   }
 }
 
