@@ -153,7 +153,7 @@ const PillNav: React.FC<PillNavProps> = ({
       {/* Mobile Hamburger Button */}
       <button
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        className="md:hidden fixed top-4 left-4 z-[1003] w-12 h-12 rounded-full bg-white dark:bg-gray-800 flex items-center justify-center shadow-lg"
+        className="md:hidden fixed top-4 right-16 z-[1003] w-12 h-12 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-md flex items-center justify-center shadow-lg"
         aria-label="Toggle menu"
       >
         {isMobileMenuOpen ? (
@@ -175,11 +175,11 @@ const PillNav: React.FC<PillNavProps> = ({
       <div
         className={cn(
           "md:hidden fixed top-0 left-0 h-full w-64 z-[1002] transition-transform duration-300",
-          "bg-white dark:bg-gray-900 shadow-2xl",
+          "bg-white/90 dark:bg-gray-900/90 backdrop-blur-md shadow-2xl",
           isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
         )}
       >
-        <div className="pt-20 px-4">
+        <div className="pt-24 px-4">
           <ul className="list-none m-0 p-[3px] flex flex-col gap-[3px]">
             {items.map((item, index) => (
               <li key={`mobile-nav-${index}`}>
