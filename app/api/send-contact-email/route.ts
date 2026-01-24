@@ -2,8 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { createClient } from '@supabase/supabase-js';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
@@ -103,6 +101,9 @@ export async function POST(request: NextRequest) {
     // Send email via Resend
     console.log('[API/send-contact-email] Sending email to:', agentEmail);
     console.log('[API/send-contact-email] RESEND_API_KEY exists:', !!process.env.RESEND_API_KEY);
+    
+    // Initialize Resend inside the handler to avoid build-time errors
+    const resend = new Resend(process.env.RESEND_API_KEY);
     
     const { data: emailData, error: emailError } = await resend.emails.send({
       from: 'Nridesikart Contact <onboarding@resend.dev>',
