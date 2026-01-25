@@ -83,7 +83,7 @@ export default function StepCard({ onComplete, onClose }: StepCardProps) {
   }
 
   const openWhatsApp = () => {
-    window.open('https://chat.whatsapp.com/J8WlnMGDpbe45c5r9DKWhU', '_blank')
+    window.open('https://chat.whatsapp.com/GGysFAkQhIMJXXeh150Igt', '_blank')
   }
 
   const stepVariants = {
