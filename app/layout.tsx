@@ -17,6 +17,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Nridesikart - Connecting NRIs with India",
   description: "Experience authentic Indian services from the comfort of your home in the USA. Life insurance, tailoring, real estate, and more.",
+  icons: {
+    icon: "/logo.png",
+    shortcut: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 export default function RootLayout({
