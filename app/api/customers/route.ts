@@ -2,13 +2,18 @@ import { NextRequest, NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 
 export async function POST(request: NextRequest) {
-  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL?.trim();
-  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY?.trim();
+  const supabaseUrl = (process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL)?.trim();
+  const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY?.trim();
 
   // Check env vars first
   if (!supabaseUrl || !supabaseKey) {
     return NextResponse.json(
-      { error: "Server configuration error", details: "Missing Supabase credentials", hasUrl: !!supabaseUrl, hasKey: !!supabaseKey },
+      {
+        error: "Server configuration error",
+        details: "Missing Supabase server credentials",
+        hasUrl: !!supabaseUrl,
+        hasServiceRoleKey: !!supabaseKey,
+      },
       { status: 500 }
     );
   }
@@ -50,11 +55,15 @@ export async function POST(request: NextRequest) {
     const supabase = createClient(supabaseUrl, supabaseKey);
 
     // Check if customer already exists by email
-    const { data: existingCustomer } = await supabase
+    const { data: existingCustomer, error: existingCustomerError } = await supabase
       .from("customers")
       .select("email")
       .eq("email", email)
-      .single();
+      .maybeSingle();
+
+    if (existingCustomerError) {
+      console.log("[API/customers] Existing customer lookup error:", existingCustomerError);
+    }
 
     if (existingCustomer) {
       // Customer already exists - return error instead of silently skipping
