@@ -332,7 +332,7 @@ export default function HomePage() {
       <footer className="relative z-10 bg-gray-900 dark:bg-black text-white py-12 px-4">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-gray-400 text-base mb-4">
-            © 2024 Nridesikart. All rights reserved.
+            © 2025 Nridesikart. All rights reserved.
           </p>
           <div className="flex justify-center gap-6 text-sm">
             <Link href="/privacy" className="hover:text-orange-400 transition-colors">

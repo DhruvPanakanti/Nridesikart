@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Shield, Shirt, Home, Heart, Car, ArrowRight, Phone, Mail, MapPin, Clock, Users, Target, Globe, Send } from "lucide-react";
+import { Shield, Shirt, Home, Heart, Car, ArrowRight, Phone, Mail, MapPin, Clock, Users, Target, Globe, Send, MessageCircle } from "lucide-react";
 import { useTheme } from "next-themes";
 import { GalaxyThemed } from "@/components/ui/GalaxyThemed";
 import PillNav from "@/components/ui/PillNav";
@@ -772,13 +772,23 @@ export default function LandingPage() {
                 </div>
 
                 <div className="flex items-start gap-4 bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-2xl p-6 border-2 border-orange-200 dark:border-orange-600">
+                  <div className="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
+                    <MessageCircle className="w-6 h-6 text-white" strokeWidth={2} />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">WhatsApp</h4>
+                    <p className="text-gray-700 dark:text-gray-300">+1 (925) 599-2202</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4 bg-white dark:bg-gray-800/50 backdrop-blur-md rounded-2xl p-6 border-2 border-orange-200 dark:border-orange-600">
                   <div className="w-12 h-12 rounded-full bg-red-500 flex items-center justify-center flex-shrink-0">
                     <Phone className="w-6 h-6 text-white" strokeWidth={2} />
                   </div>
                   <div>
                     <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-1">Call Us</h4>
-                    <p className="text-gray-700 dark:text-gray-300">USA: +1 (703) 663-0999</p>
-                    <p className="text-gray-700 dark:text-gray-300">India: +91 8074987228</p>
+                    <p className="text-gray-700 dark:text-gray-300">USA: +1 (925) 599-2202</p>
+                    <p className="text-gray-700 dark:text-gray-300">India:+91 90593 11978</p>
                   </div>
                 </div>
               </div>
